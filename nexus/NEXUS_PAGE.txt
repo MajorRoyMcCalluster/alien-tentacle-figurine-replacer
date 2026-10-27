@@ -130,5 +130,4 @@ Variants are on the way.
 ---------------------------------------------------------------------
 
 CHANGELOG  (Logs tab)
-1.1.0 - Now replaces the Atlas Figurine (Quicksilver shop) instead of the Tentacled Figurine (Expedition reward), so anyone can get it early. Same model, glow and wobble.
-1.0.0 - First release.
+(empty - add an entry only for a release we agree to publish)

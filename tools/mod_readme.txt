@@ -32,10 +32,5 @@ FILES
   TEXTURES\...\PROPS\ALIENTENTACLE\ATF_*          textures
   LANGUAGE\{loc}_*.EXML                        item name and description
 
-CHANGELOG
-  1.1.0  Now replaces the Atlas Figurine (Quicksilver shop) instead of the Tentacled Figurine
-         (Expedition reward), so anyone can get it early. Same model, glow and wobble.
-  1.0.0  First release.
-
 CREDITS
   Built with MBINCompiler (monkeyman192 and the NMS modding community) and HGPAKtool.
