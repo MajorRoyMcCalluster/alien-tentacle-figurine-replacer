@@ -49,9 +49,10 @@ Upload:        Alien Tentacle Figurine Replacer-1.1.0.zip
 Description:   Extract the AlienTentacleFigurine folder into No Man's Sky\GAMEDATA\MODS.
 
 ---------------------------------------------------------------------
-IMAGES  (Images tab - set images/01_hero.jpg as the primary image)
+IMAGES  (Images tab - set images/00_header.jpg as the primary image)
 ---------------------------------------------------------------------
-images/01_hero.jpg      Title image
+images/00_header.jpg    Primary image (in-game promo header)
+images/01_hero.jpg      Studio render title card
 images/02_angles.jpg    Three angles
 images/03_wobble.jpg    Rest vs wobble
 images/04_wobble.gif    Wobble loop
