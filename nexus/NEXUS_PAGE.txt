@@ -57,13 +57,15 @@ The description above also embeds it near the top.
 ---------------------------------------------------------------------
 IMAGES  (Images tab - set images/00_header.jpg as the primary image)
 ---------------------------------------------------------------------
-images/00_header.jpg    Primary image (in-game promo header)
-images/01_hero.jpg      Studio render title card
-images/02_angles.jpg    Three angles
-images/03_wobble.jpg    Rest vs wobble
-images/04_wobble.gif    Wobble loop
-images/05_closeup.jpg   Glow close-up
-Add a couple of your own in-game cockpit screenshots too: real shots sell a mod.
+images/00_header.jpg               Primary image / thumbnail (in-game promo, 16:9)
+images/nexus_banner_2000x576.jpg   Header banner (Manage > Media > Header)
+images/github_social_preview.jpg   GitHub social preview (1280x640) - not for Nexus
+images/ingame/ingame_01-06.jpg     In-game cockpit screenshots
+images/01_hero.jpg                 Studio render title card
+images/02_angles.jpg               Three angles
+images/03_wobble.jpg               Rest vs wobble
+images/04_wobble.gif               Wobble loop
+images/05_closeup.jpg              Glow close-up
 
 ---------------------------------------------------------------------
 DESCRIPTION  (paste everything between the lines into the Description box; it's BBCode)
