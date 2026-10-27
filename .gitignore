@@ -1,0 +1,10 @@
+# build output and extracted game files (never commit game assets)
+work/
+dist/
+tools/bin/*
+!tools/bin/.gitkeep
+__pycache__/
+*.pyc
+*.zip
+.DS_Store
+Thumbs.db

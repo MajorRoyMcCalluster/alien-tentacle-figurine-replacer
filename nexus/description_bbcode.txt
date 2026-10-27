@@ -1,0 +1,57 @@
+[center][size=6][color=#6effeb][b]ALIEN TENTACLE FIGURINE[/b][/color][/size]
+[size=3][i]A bioluminescent cockpit companion that wobbles while you fly.[/i][/size][/center]
+
+[line]
+
+[size=4][color=#6effeb][b]What it does[/b][/color][/size]
+A figurine replacer: swaps the [b]Tentacled Figurine[/b] cockpit adornment for a glowing alien tentacle standing on a suction-cup foot. It sits on the figurine's usual glowing pedestal on your dashboard, and the top half wobbles on the figurine's bobble joint as your ship moves.
+
+[list]
+[*]Cobalt-to-ice-blue body with bioluminescent spots and stripes
+[*]Five glowing rings up the tip and a glowing collar where it bends
+[*]Wobbles like the original bobbleheads - same motion, much more to wobble
+[*]Renamed in game to [b]Alien Tentacle Figurine[/b], with its own description
+[*]Original model and textures, built from scratch for this mod
+[/list]
+
+[size=4][color=#6effeb][b]Requirements[/b][/color][/size]
+[list]
+[*]No other mods needed
+[*]You need the [b]Tentacled Figurine[/b] in game. It's the Phase 5 reward from Expedition 15: Aquarius, which also ran as a Redux in January 2025.
+[/list]
+
+[size=4][color=#6effeb][b]Installation[/b][/color][/size]
+[list=1]
+[*]Extract the [b]AlienTentacleFigurine[/b] folder into [b]No Man's Sky\GAMEDATA\MODS\[/b] (create the MODS folder if you don't have one).
+[*]Start the game, install the Tentacled Figurine in your starship's inventory, and look at your dashboard.
+[/list]
+
+[size=4][color=#6effeb][b]Uninstalling[/b][/color][/size]
+Delete the [b]AlienTentacleFigurine[/b] folder. The mod never writes to your save, so it's safe to remove at any time.
+
+[size=4][color=#6effeb][b]Compatibility[/b][/color][/size]
+[list]
+[*][b]Visual only[/b] - nothing in your save changes.
+[*][b]Multiplayer safe[/b] - other players see the normal Tentacled Figurine.
+[*][b]Conflicts[/b] only with other mods that replace the Tentacled Figurine model. Mods for other figurines work alongside it.
+[*]The new name is in English and US English. Other languages keep the original name.
+[*]A game update that changes the Tentacled Figurine may need a mod update.
+[/list]
+
+[size=4][color=#6effeb][b]FAQ[/b][/color][/size]
+[b]I installed it but still see the old octopus.[/b]
+Check the folder path is GAMEDATA\MODS\AlienTentacleFigurine\MODELS... (not MODS\AlienTentacleFigurine\AlienTentacleFigurine\...), then restart the game.
+
+[b]The name didn't change.[/b]
+Restart the game. Text changes only load at startup. If your game language isn't English, the original name stays.
+
+[b]Can I get it in other colours?[/b]
+Variants are on the way.
+
+[size=4][color=#6effeb][b]Credits[/b][/color][/size]
+[list]
+[*]Built with [b]MBINCompiler[/b] (monkeyman192 and the NMS modding community) and [b]HGPAKtool[/b].
+[*]Hello Games for No Man's Sky.
+[/list]
+
+[center][size=2][i]Endorse if it made you laugh in a dogfight.[/i][/size][/center]
