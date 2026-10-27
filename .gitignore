@@ -8,3 +8,6 @@ __pycache__/
 *.zip
 .DS_Store
 Thumbs.db
+
+# your own recordings and shelved concepts (kept locally, not published)
+media/
