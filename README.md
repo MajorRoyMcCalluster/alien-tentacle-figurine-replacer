@@ -2,9 +2,7 @@
 
 ![Alien Tentacle Figurine](nexus/images/01_hero.jpg)
 
-A cockpit figurine replacer for **No Man's Sky**. It swaps the **Atlas Figurine** (a cheap Quicksilver-shop item, so anyone can get it early)
-for an original glowing alien tentacle on a suction-cup foot. The top half wobbles on the figurine's bobble joint
-as your ship moves, five glowing rings run up its length, and the item is renamed **Alien Tentacle Figurine** in game.
+A figurine replacer for **No Man's Sky**. Replaces the **Atlas Figurine** cockpit figurine with a glowing, wobbling alien tentacle on a suction-cup. Bioluminescent rings and spots, jiggle physics while you fly, and the item is renamed in game. Visual only, multiplayer safe, uninstall any time.
 
 - Visual only: it never touches your save
 - Multiplayer safe: other players see the normal figurine

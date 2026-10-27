@@ -37,7 +37,7 @@ Cockpit, Ships, Models, Bobblehead, Figurine, Decoration, Glow
 ---------------------------------------------------------------------
 BRIEF OVERVIEW / SUMMARY  (the short line under the title, under 350 characters)
 ---------------------------------------------------------------------
-Replaces the Atlas Figurine cockpit adornment with a glowing, wobbling alien tentacle on a suction-cup foot. Bioluminescent rings and spots, a proper wobble while you fly, and the item is renamed in game. Visual only, multiplayer safe, uninstall any time.
+Replaces the Atlas Figurine cockpit figurine with a glowing, wobbling alien tentacle on a suction-cup. Bioluminescent rings and spots, jiggle physics while you fly, and the item is renamed in game. Visual only, multiplayer safe, uninstall any time.
 
 ---------------------------------------------------------------------
 MAIN FILE  (Files tab)
