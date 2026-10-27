@@ -4,7 +4,7 @@
 [line]
 
 [size=4][color=#6effeb][b]What it does[/b][/color][/size]
-A figurine replacer: swaps the [b]Tentacled Figurine[/b] cockpit adornment for a glowing alien tentacle standing on a suction-cup foot. It sits on the figurine's usual glowing pedestal on your dashboard, and the top half wobbles on the figurine's bobble joint as your ship moves.
+A figurine replacer: swaps the [b]Atlas Figurine[/b] cockpit adornment for a glowing alien tentacle standing on a suction-cup foot. It sits on the figurine's usual glowing pedestal on your dashboard, and the top half wobbles on the figurine's bobble joint as your ship moves.
 
 [list]
 [*]Cobalt-to-ice-blue body with bioluminescent spots and stripes
@@ -17,13 +17,13 @@ A figurine replacer: swaps the [b]Tentacled Figurine[/b] cockpit adornment for a
 [size=4][color=#6effeb][b]Requirements[/b][/color][/size]
 [list]
 [*]No other mods needed
-[*]You need the [b]Tentacled Figurine[/b] in game. It's the Phase 5 reward from Expedition 15: Aquarius, which also ran as a Redux in January 2025.
+[*]You need the [b]Atlas Figurine[/b] in game. It's the easiest figurine to get: buy it with Quicksilver from the [b]Quicksilver Synthesis Companion[/b] on the Space Anomaly. Some reward starships also come with it installed.
 [/list]
 
 [size=4][color=#6effeb][b]Installation[/b][/color][/size]
 [list=1]
 [*]Extract the [b]AlienTentacleFigurine[/b] folder into [b]No Man's Sky\GAMEDATA\MODS\[/b] (create the MODS folder if you don't have one).
-[*]Start the game, install the Tentacled Figurine in your starship's inventory, and look at your dashboard.
+[*]Start the game, install the Atlas Figurine in your starship's inventory, and look at your dashboard.
 [/list]
 
 [size=4][color=#6effeb][b]Uninstalling[/b][/color][/size]
@@ -32,14 +32,14 @@ Delete the [b]AlienTentacleFigurine[/b] folder. The mod never writes to your sav
 [size=4][color=#6effeb][b]Compatibility[/b][/color][/size]
 [list]
 [*][b]Visual only[/b] - nothing in your save changes.
-[*][b]Multiplayer safe[/b] - other players see the normal Tentacled Figurine.
-[*][b]Conflicts[/b] only with other mods that replace the Tentacled Figurine model. Mods for other figurines work alongside it.
+[*][b]Multiplayer safe[/b] - other players see the normal Atlas Figurine.
+[*][b]Conflicts[/b] only with other mods that replace the Atlas Figurine model. Mods for other figurines work alongside it.
 [*]The new name is in English and US English. Other languages keep the original name.
-[*]A game update that changes the Tentacled Figurine may need a mod update.
+[*]A game update that changes the Atlas Figurine may need a mod update.
 [/list]
 
 [size=4][color=#6effeb][b]FAQ[/b][/color][/size]
-[b]I installed it but still see the old octopus.[/b]
+[b]I installed it but still see the old Atlas figurine.[/b]
 Check the folder path is GAMEDATA\MODS\AlienTentacleFigurine\MODELS... (not MODS\AlienTentacleFigurine\AlienTentacleFigurine\...), then restart the game.
 
 [b]The name didn't change.[/b]

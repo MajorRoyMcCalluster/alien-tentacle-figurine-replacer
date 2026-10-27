@@ -1,18 +1,18 @@
-"""Generates the Alien Tentacle Figurine: replaces the Tentacled Figurine (OCTOBOBBLEHEAD) with an original
-bioluminescent alien tentacle on a suction-cup foot.
+"""Generates the Alien Tentacle Figurine: replaces the figurine in common.SLOT (the Atlas Figurine) with an
+original bioluminescent alien tentacle on a suction-cup foot.
 
-Meshes (names kept so the game's name-hash links still match):
-  OCTOLOW     upper tendril, child of Headjnt  -> wobbles (pivot y = 0.135)
-  SUB1OCTOLOW glowing rings on the upper tendril (unlit glow material)
-  SUB2OCTOLOW glowing collar over the wobble seam (unlit glow material)
-  SPLASHLOW   foot + lower tendril, static
-  BASE / SUB1BASE  the original pedestal, untouched
+Mesh roles (the figurine's own mesh names are kept so the game's name-hash links still match; see SLOT["roles"]):
+  head    upper tendril, child of Headjnt  -> wobbles (pivot y = 0.135)
+  rings   glowing rings on the upper tendril (unlit glow material)
+  collar  glowing collar over the wobble seam (unlit glow material)
+  lower   foot + lower tendril, static
+  the pedestal geometry is the game's own; its glow ring is recoloured green
 """
 import numpy as np, re, base64, os, sys, copy, struct
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import WORK, BOB, PREFIX, mxml_of, mbin
+from common import WORK, BOB, PREFIX, SLOT, SCENE_LC, mxml_of, mbin
 
 OUT = os.path.join(WORK, "out") + os.sep
 
@@ -165,7 +165,7 @@ def build_meshes():
         rings.add(*torus(tt, minor=radius(np.array([tt]))[0] * 0.10, extra=0.0))
     collar = Mesh(); collar.add(*torus(T_SEAM, minor=0.0042 * SIZE, extra=0.0015 * SIZE))
     low = Mesh(); low.add(*foot()); low.add(*tube(0.0, T_SEAM + 0.01, 45)); low.add(*cap(T_SEAM + 0.01, +1))
-    return {"OCTOLOW": up.done(), "SUB1OCTOLOW": rings.done(), "SUB2OCTOLOW": collar.done(), "SPLASHLOW": low.done()}
+    return {"head": up.done(), "rings": rings.done(), "collar": collar.done(), "lower": low.done()}
 
 # ---------------------------------------------------------------- packing
 def pack_normal(n):
@@ -250,10 +250,11 @@ def textures():
     mip_dds(normal, "ATI2", OUT + f"tex/{PREFIX}_BIOLUM.NORMAL.DDS")
 
 # ---------------------------------------------------------------- files
-GEO_NAME = "MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/BOBBLEHEADS/OCTOBOBBLEHEAD"
-MATP = "MODELS\\PLANETS\\BIOMES\\COMMON\\BUILDINGS\\PROPS\\BOBBLEHEADS\\OCTOBOBBLEHEAD\\"
+SC = SLOT["scene"]
+MATP = "MODELS\\PLANETS\\BIOMES\\COMMON\\BUILDINGS\\PROPS\\BOBBLEHEADS\\" + SC + "\\"
 MAIN_MAT = MATP + f"{PREFIX}_BIOLUM_MAT.MATERIAL.MBIN"
 GLOW_MAT = MATP + f"{PREFIX}_GLOW_MAT.MATERIAL.MBIN"
+PEDESTAL_MAT = MATP + f"{PREFIX}_PEDESTAL_MAT.MATERIAL.MBIN"
 TEX_PATH = f"TEXTURES/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/ALIENTENTACLE/{PREFIX}_BIOLUM"
 
 def compile_mxml(path):
@@ -273,13 +274,14 @@ def fix_position_counts(path, ds):
     return bytes(b)
 
 def main():
-    meshes = build_meshes()
+    meshes = {SLOT["roles"][r]: m for r, m in build_meshes().items()}
+    role_of = {v: k for k, v in SLOT["roles"].items()}
     # original pedestal streams
     os.makedirs(OUT, exist_ok=True)
-    GEO_DATA = mxml_of(BOB + "octobobblehead.geometry.data.mbin.pc")
-    GEO_HDR = mxml_of(BOB + "octobobblehead.geometry.mbin.pc")
+    GEO_DATA = mxml_of(BOB + SCENE_LC + ".geometry.data.mbin.pc")
+    GEO_HDR = mxml_of(BOB + SCENE_LC + ".geometry.mbin.pc")
     od = open(GEO_DATA).read()
-    order = ["OCTOLOW", "SUB1OCTOLOW", "SUB2OCTOLOW", "SPLASHLOW", "BASE", "SUB1BASE"]
+    order = SLOT["order"]
     data = {}
     for name in order:
         if name in meshes:
@@ -303,10 +305,10 @@ def main():
         props["MeshDataStream"].set("value", base64.b64encode(d["vb"] + d["ib"]).decode())
         props["MeshPositionDataStream"].set("value", base64.b64encode(d["pb"]).decode())
     os.makedirs(OUT + "build", exist_ok=True)
-    dpath = OUT + "build/OCTOBOBBLEHEAD.GEOMETRY.DATA.MXML"
+    dpath = OUT + f"build/{SC}.GEOMETRY.DATA.MXML"
     dt.write(dpath, encoding="utf-8", xml_declaration=True)
     compile_mxml(dpath)
-    raw = fix_position_counts(OUT + "build/OCTOBOBBLEHEAD.GEOMETRY.DATA.MBIN.PC", [data[n] for n in order])
+    raw = fix_position_counts(OUT + f"build/{SC}.GEOMETRY.DATA.MBIN.PC", [data[n] for n in order])
     # ---- header
     ht = ET.parse(GEO_HDR); hroot = ht.getroot()
     hp = {c.get("name"): c for c in hroot}
@@ -356,11 +358,11 @@ def main():
         props["VertexDataSize"].set("value", str(len(d["vb"]))); props["VertexDataOffset"].set("value", str(vio))
         props["VertexPositionDataSize"].set("value", str(len(d["pb"]))); props["VertexPositionDataOffset"].set("value", str(po))
         props["IndexDataSize"].set("value", str(len(d["ib"]))); props["IndexDataOffset"].set("value", str(len(d["vb"])))
-    hpath = OUT + "build/OCTOBOBBLEHEAD.GEOMETRY.MXML"
+    hpath = OUT + f"build/{SC}.GEOMETRY.MXML"
     ht.write(hpath, encoding="utf-8", xml_declaration=True)
     compile_mxml(hpath)
     # ---- scene
-    st = ET.parse(mxml_of(BOB + "octobobblehead.scene.mbin")); sroot = st.getroot()
+    st = ET.parse(mxml_of(BOB + SCENE_LC + ".scene.mbin")); sroot = st.getroot()
     def walk(e):
         props = {c.get("name"): c for c in e if c.tag == "Property"}
         yield e, props
@@ -379,13 +381,18 @@ def main():
                 "BATCHSTARTGRAPH": 0, "BATCHCOUNT": d["ni"], "VERTRSTARTGRAPH": 0, "VERTRENDGRAPHIC": d["nv"] - 1,
                 "BOUNDHULLST": hst[k], "BOUNDHULLED": hed[k]}
         for c, v in zip(["AABBMINX", "AABBMINY", "AABBMINZ", "AABBMAXX", "AABBMAXY", "AABBMAXZ"], aabbs[name]): vals[c] = "%.6f" % v
-        if name == "OCTOLOW" or name == "SPLASHLOW": vals["MATERIAL"] = MAIN_MAT
-        if name in ("SUB1OCTOLOW", "SUB2OCTOLOW"): vals["MATERIAL"] = GLOW_MAT
+        role = role_of.get(name)
+        if role in ("head", "lower"): vals["MATERIAL"] = MAIN_MAT
+        if role in ("rings", "collar"): vals["MATERIAL"] = GLOW_MAT
+        if name == SLOT["pedestal_glow"]: vals["MATERIAL"] = PEDESTAL_MAT
         for key, v in vals.items(): attrs[key].set("value", str(v))
-        if name == "SPLASHLOW":                       # identity transform: we author it in place
+        # our meshes are authored in figurine space: head = Headjnt offset only, children/lower = identity
+        if role in ("head", "lower"):
             for c in props["Transform"]:
                 c.set("value", "1.000000" if c.get("name").startswith("Scale") else "0.000000")
-    spath = OUT + "build/OCTOBOBBLEHEAD.SCENE.MXML"
+            if role == "head":
+                [c for c in props["Transform"] if c.get("name") == "TransY"][0].set("value", "%.6f" % -PIVOT)
+    spath = OUT + f"build/{SC}.SCENE.MXML"
     st.write(spath, encoding="utf-8", xml_declaration=True)
     compile_mxml(spath)
     # ---- materials
@@ -402,6 +409,10 @@ def main():
                   '<Property name="X" value="0.300000" />\n\t\t\t\t<Property name="Y" value="1.000000" />\n\t\t\t\t<Property name="Z" value="0.930000" />')
     assert "0.930000" in g, "glow material changed in a game update"
     open(OUT + f"build/{PREFIX}_GLOW_MAT.MATERIAL.MXML", "w").write(g); compile_mxml(OUT + f"build/{PREFIX}_GLOW_MAT.MATERIAL.MXML")
+    # pedestal glow ring: the game's green pedestal glow (as on the original release), under our own name
+    pg = open(mxml_of(BOB + "octobobblehead/bobblebaseglowgreenmat.material.mbin")).read()
+    pg = re.sub(r'(<Data template="cTkMaterialData">\s*<Property name="Name" value=")[^"]*', r'\1' + PREFIX + '_PEDESTAL_MAT', pg)
+    open(OUT + f"build/{PREFIX}_PEDESTAL_MAT.MATERIAL.MXML", "w").write(pg); compile_mxml(OUT + f"build/{PREFIX}_PEDESTAL_MAT.MATERIAL.MXML")
     textures()
     np.save(OUT + "meshes.npy", {k: v for k, v in meshes.items()}, allow_pickle=True)
     print("seam t=%.3f  verts=%d  indices=%d" % (T_SEAM, v0, bi))

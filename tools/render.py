@@ -9,8 +9,10 @@ REL = os.path.join(C.WORK, "mod", C.MOD_FOLDER) + "/"
 OUT = os.path.join(C.REPO, "nexus", "images") + "/"; os.makedirs(OUT, exist_ok=True)
 B = REL + "MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/BOBBLEHEADS/"
 W = os.path.join(C.WORK, "render") + "/"; shutil.rmtree(W, ignore_errors=True); os.makedirs(W)
-for f in ("OCTOBOBBLEHEAD.GEOMETRY.MBIN.PC", "OCTOBOBBLEHEAD.GEOMETRY.DATA.MBIN.PC"): shutil.copy(B + f, W + f.lower())
-C.mbin(W + "octobobblehead.geometry.mbin.pc")
+SC = C.SLOT["scene"]; R_ = C.SLOT["roles"]
+HEAD = (R_["head"], R_["rings"], R_["collar"]); GLOW = (R_["rings"], R_["collar"], C.SLOT["pedestal_glow"])
+for f in (f"{SC}.GEOMETRY.MBIN.PC", f"{SC}.GEOMETRY.DATA.MBIN.PC"): shutil.copy(B + f, W + f.lower())
+C.mbin(W + C.SCENE_LC + ".geometry.mbin.pc")
 
 def font(name, size):
     for d in ("C:/Windows/Fonts/", os.path.expanduser("~/.fonts/"), "/mnt/user-data/uploads/Fonts/"):
@@ -19,7 +21,7 @@ def font(name, size):
         try: return ImageFont.truetype(f, size)
         except OSError: pass
     return ImageFont.load_default()
-hdr = open(W + "octobobblehead.geometry.MXML").read(); raw = open(W + "octobobblehead.geometry.data.mbin.pc", "rb").read()
+hdr = open(W + C.SCENE_LC + ".geometry.MXML").read(); raw = open(W + C.SCENE_LC + ".geometry.data.mbin.pc", "rb").read()
 tex = np.asarray(Image.open(REL + f"TEXTURES/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/ALIENTENTACLE/{C.PREFIX}_BIOLUM.DDS").convert("RGB")).astype(np.float32) / 255
 
 def unpack(v):
@@ -57,11 +59,11 @@ def render(W_, H_, yaw=25, pitch=-12, wob=(0, 0), ppu=2600, cx=0.5, cy=0.55, foc
     piv = np.array([0, 0.135, 0])
     for name, (P, N, UV, idx) in meshes.items():
         Q = P.copy(); NN = N.copy()
-        if name in ("BASE", "SUB1BASE"): Q = Q + np.array([-0.005799, 0.079075, -0.011222])
-        if name in ("OCTOLOW", "SUB1OCTOLOW", "SUB2OCTOLOW"):
+        if name in (C.SLOT["pedestal"], C.SLOT["pedestal_glow"]): Q = Q + np.array(C.SLOT["base_offset"])
+        if name in HEAD:
             T = tilt(*wob); Q = (Q - piv) @ T.T + piv; NN = NN @ T.T
         Q = (Q - [0, focus_y, 0]) @ R.T; NN = NN @ R.T
-        isglow = name in ("SUB1OCTOLOW", "SUB2OCTOLOW", "SUB1BASE")
+        isglow = name in GLOW
         for f in idx:
             q = Q[f]
             fn = np.cross(q[1] - q[0], q[2] - q[0])

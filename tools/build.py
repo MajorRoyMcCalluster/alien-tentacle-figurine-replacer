@@ -50,15 +50,16 @@ def assemble():
     m = os.path.join(C.WORK, "mod", C.MOD_FOLDER); shutil.rmtree(os.path.dirname(m), ignore_errors=True)
     G = os.path.join(m, "MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/BOBBLEHEADS")
     T = os.path.join(m, "TEXTURES/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/ALIENTENTACLE")
-    for d in (G + "/OCTOBOBBLEHEAD", T, m + "/LANGUAGE"): os.makedirs(d)
-    for f in ("OCTOBOBBLEHEAD.SCENE.MBIN", "OCTOBOBBLEHEAD.GEOMETRY.MBIN.PC", "OCTOBOBBLEHEAD.GEOMETRY.DATA.MBIN.PC"):
+    SC = C.SLOT["scene"]
+    for d in (G + "/" + SC, T, m + "/LANGUAGE"): os.makedirs(d)
+    for f in (f"{SC}.SCENE.MBIN", f"{SC}.GEOMETRY.MBIN.PC", f"{SC}.GEOMETRY.DATA.MBIN.PC"):
         shutil.copy(os.path.join(out, "build", f), G)
-    for f in (f"{C.PREFIX}_BIOLUM_MAT.MATERIAL.MBIN", f"{C.PREFIX}_GLOW_MAT.MATERIAL.MBIN"):
-        shutil.copy(os.path.join(out, "build", f), G + "/OCTOBOBBLEHEAD")
+    for f in (f"{C.PREFIX}_BIOLUM_MAT.MATERIAL.MBIN", f"{C.PREFIX}_GLOW_MAT.MATERIAL.MBIN", f"{C.PREFIX}_PEDESTAL_MAT.MATERIAL.MBIN"):
+        shutil.copy(os.path.join(out, "build", f), G + "/" + SC)
     for f in os.listdir(os.path.join(out, "tex")): shutil.copy(os.path.join(out, "tex", f), T)
-    entries = {"UI_S15_FISH_BOBBLE": C.ITEM_NAME, "UI_S15_FISH_BOBBLE_L": C.ITEM_NAME_L, "UI_S15_FISH_BOBBLE_DESC": C.ITEM_DESC}
-    for fn, col in (("NMS_LOC9_ENGLISH.EXML", "English"), ("NMS_LOC9_USENGLISH.EXML", "USEnglish")):
-        o = ['<?xml version="1.0" encoding="utf-8"?>', f'<!-- {C.MOD_NAME} v{C.VERSION}: renames the Tentacled Figurine -->',
+    entries = dict(zip(C.SLOT["text_keys"], (C.ITEM_NAME, C.ITEM_NAME_L, C.ITEM_DESC)))
+    for fn, col in ((C.SLOT["loc"] + "_ENGLISH.EXML", "English"), (C.SLOT["loc"] + "_USENGLISH.EXML", "USEnglish")):
+        o = ['<?xml version="1.0" encoding="utf-8"?>', f'<!-- {C.MOD_NAME} v{C.VERSION}: renames the {C.SLOT["label"]} -->',
              '<Data template="cTkLocalisationTable">', '\t<Property name="Table">']
         for k, v in entries.items():
             o += [f'\t\t<Property name="Table" value="TkLocalisationEntry" _id="{k}">', f'\t\t\t<Property name="Id" value="{k}" />',
@@ -66,7 +67,8 @@ def assemble():
         o += ['\t</Property>', '</Data>', '']
         open(os.path.join(m, "LANGUAGE", fn), "w", encoding="utf-8", newline="\r\n").write("\n".join(o))
     readme = open(os.path.join(C.REPO, "tools", "mod_readme.txt"), encoding="utf-8").read()
-    readme = readme.format(name=C.MOD_NAME, version=C.VERSION, author=C.AUTHOR, folder=C.MOD_FOLDER, item=C.ITEM_NAME_L)
+    readme = readme.format(name=C.MOD_NAME, version=C.VERSION, author=C.AUTHOR, folder=C.MOD_FOLDER, item=C.ITEM_NAME_L,
+                           slot=C.SLOT["label"], slot_uc=C.SLOT["label"].upper(), scene=C.SLOT["scene"], loc=C.SLOT["loc"])
     open(os.path.join(m, "README.txt"), "w", encoding="utf-8", newline="\r\n").write(readme)
     return m
 

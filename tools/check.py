@@ -12,9 +12,10 @@ def run(MOD):
         (notes if cond else fails).append(("PASS " if cond else "FAIL ") + msg)
 
     B = MOD + "/MODELS/PLANETS/BIOMES/COMMON/BUILDINGS/PROPS/BOBBLEHEADS/"
-    files = {"scene": B + "OCTOBOBBLEHEAD.SCENE.MBIN", "geo": B + "OCTOBOBBLEHEAD.GEOMETRY.MBIN.PC",
-             "data": B + "OCTOBOBBLEHEAD.GEOMETRY.DATA.MBIN.PC",
-             "mat": B + f"OCTOBOBBLEHEAD/{C.PREFIX}_BIOLUM_MAT.MATERIAL.MBIN", "glow": B + f"OCTOBOBBLEHEAD/{C.PREFIX}_GLOW_MAT.MATERIAL.MBIN"}
+    SC = C.SLOT["scene"]; ours = list(C.SLOT["roles"].values())
+    files = {"scene": B + f"{SC}.SCENE.MBIN", "geo": B + f"{SC}.GEOMETRY.MBIN.PC", "data": B + f"{SC}.GEOMETRY.DATA.MBIN.PC",
+             "mat": B + f"{SC}/{C.PREFIX}_BIOLUM_MAT.MATERIAL.MBIN", "glow": B + f"{SC}/{C.PREFIX}_GLOW_MAT.MATERIAL.MBIN",
+             "pedestal": B + f"{SC}/{C.PREFIX}_PEDESTAL_MAT.MATERIAL.MBIN"}
     for k, f in files.items(): ok(os.path.exists(f), f"file present: {os.path.relpath(f, MOD)}")
 
     # 1) every MBIN decompiles, and recompiling the MXML reproduces the same bytes
@@ -58,7 +59,7 @@ def run(MOD):
            f"{m.group(1)}: data file's own stream lists match the header offsets")
     hp = lambda tag: [int(x) for x in re.findall(r'<Property name="%s" value="(\d+)" _index' % tag, hdr)]
     starts, ends = hp("MeshVertRStart"), hp("MeshVertREnd")
-    order = ["OCTOLOW", "SUB1OCTOLOW", "SUB2OCTOLOW", "SPLASHLOW", "BASE", "SUB1BASE"]
+    order = C.SLOT["order"]
     ok(list(meshes) == order, "mesh order matches original")
     v0 = 0
     for k, nm in enumerate(order):
@@ -70,7 +71,7 @@ def run(MOD):
         v = v.astype(np.int64); x = (v & 1023) / 511.5 - 1; y = ((v >> 10) & 1023) / 511.5 - 1; z = 1 - abs(x) - abs(y)
         nx = np.where(z < 0, (1 - abs(y)) * np.sign(x), x); ny = np.where(z < 0, (1 - abs(x)) * np.sign(y), y)
         N = np.stack([nx, ny, z], 1); return N / np.linalg.norm(N, axis=1, keepdims=True)
-    for nm in order[:4]:
+    for nm in ours:
         pos, idx, vb, h = meshes[nm]
         N = unpack(np.frombuffer(vb, dtype=[("c", "u1", 4), ("n", "<u4")])["n"])
         P = pos[:, :3]
@@ -88,13 +89,13 @@ def run(MOD):
         nm = m.group(1).upper(); pos, idx, vb, h = meshes[nm]
         ok(int(a["HASH"]) == h == int(m.group(2)), f"scene {m.group(1)}: hash links to its stream")
         ok(int(a["BATCHCOUNT"]) == idx.size and int(a["VERTRENDGRAPHIC"]) == len(pos) - 1, f"scene {m.group(1)}: counts match")
-        if nm in order[:4]:
+        if nm in ours:
             lo, hi = pos[:, :3].min(0), pos[:, :3].max(0)
             sa = np.array([float(a[k]) for k in ("AABBMINX", "AABBMINY", "AABBMINZ", "AABBMAXX", "AABBMAXY", "AABBMAXZ")])
             ok(np.abs(sa - np.r_[lo, hi]).max() < 2e-3, f"scene {m.group(1)}: bounding box matches mesh")
         mat = a["MATERIAL"].replace("\\", "/").split("/")[-1]
-        in_mod = os.path.exists(B + "OCTOBOBBLEHEAD/" + mat)
-        in_game = os.path.exists(C.game_path(C.BOB + "octobobblehead/" + mat.lower()))
+        in_mod = os.path.exists(B + f"{SC}/" + mat)
+        in_game = os.path.exists(C.game_path(C.BOB + C.SCENE_LC + "/" + mat.lower()))
         ok(in_mod or in_game, f"scene {m.group(1)}: material {mat} exists ({'mod' if in_mod else 'game'})")
 
     # 4) materials point at textures that ship with the mod; DDS files are complete
@@ -132,6 +133,18 @@ def run(MOD):
     ok(not any(w in open(p, "rb").read().decode("latin1").upper() for w in ("MIA_", "MIAKEEPSAKE", "ATD_")
                  for p in glob.glob(MOD + "/**/*.*", recursive=True) if not p.endswith(".DDS")), "no leftover old names in any file")
     ok(not any(w in os.path.relpath(p, MOD).upper() for w in ("ATD_", "MIA") for p in glob.glob(MOD + "/**/*", recursive=True)), "no old names in file paths")
+    # 7) the scene places our meshes the way they were authored, and the text patches the slot's own keys
+    def tf(name):
+        m = re.search(r'<Property name="Name" value="%s" />.*?<Property name="Transform" value="TkTransformData">(.*?)</Property>' % name, sc, re.S | re.I)
+        return {k: float(v) for k, v in re.findall(r'name="(\w+)" value="([-\d.]+)"', m.group(1))}
+    for role, nm in C.SLOT["roles"].items():
+        t = tf(nm); want = {"TransY": -0.135} if role == "head" else {}
+        good = all(abs(t[k] - (want.get(k, 1.0 if k.startswith("Scale") else 0.0))) < 1e-5 for k in t)
+        ok(good, f"scene {nm}: {role} transform as authored")
+    for p in glob.glob(MOD + "/LANGUAGE/*.EXML"):
+        ok(os.path.basename(p).startswith(C.SLOT["loc"] + "_") and all(k in open(p).read() for k in C.SLOT["text_keys"]),
+           f"text patch targets {C.SLOT['label']}: {os.path.basename(p)}")
+    ok(not glob.glob(B + "OCTOBOBBLEHEAD*"), "nothing left over from the old Tentacled slot")
     for n in notes: print(n)
     for f in fails: print(f)
     print(f"\n{len(notes)} passed, {len(fails)} failed")

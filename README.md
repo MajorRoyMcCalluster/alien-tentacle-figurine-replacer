@@ -2,13 +2,15 @@
 
 ![Alien Tentacle Figurine](nexus/images/01_hero.jpg)
 
-A cockpit figurine replacer for **No Man's Sky**. It swaps the **Tentacled Figurine** (the Expedition 15: Aquarius reward)
+A cockpit figurine replacer for **No Man's Sky**. It swaps the **Atlas Figurine** (a cheap Quicksilver-shop item, so anyone can get it early)
 for an original glowing alien tentacle on a suction-cup foot. The top half wobbles on the figurine's bobble joint
 as your ship moves, five glowing rings run up its length, and the item is renamed **Alien Tentacle Figurine** in game.
 
 - Visual only: it never touches your save
 - Multiplayer safe: other players see the normal figurine
 - Uninstall by deleting the mod folder
+
+**Getting the Atlas Figurine:** buy it with Quicksilver from the Quicksilver Synthesis Companion on the Space Anomaly. Some reward starships also come with it installed.
 
 **Players:** download the ready-made mod from Nexus Mods (or from this repo's Releases), then extract the
 `AlienTentacleFigurine` folder into `No Man's Sky\GAMEDATA\MODS\`.
@@ -44,9 +46,9 @@ To make the Nexus/README images afterwards: `python tools/render.py` (writes to 
 | `nexus/` | Nexus Mods page text (BBCode) and images |
 
 ### How it works
-The Tentacled Figurine's scene links its meshes by name, so the build keeps the original mesh names and replaces
-their contents: the upper tentacle and its glowing rings hang off the figurine's head joint (that's what wobbles),
-the foot and lower tentacle are static, and the original glowing pedestal is kept as-is. A glowing collar sits over
+The figurine's scene links its meshes by name, so the build keeps the original mesh names and replaces
+their contents (the slot is set in `SLOT` in `tools/common.py`): the upper tentacle and its glowing rings hang off the figurine's head joint (that's what wobbles),
+the foot and lower tentacle are static, and the original pedestal is kept (its glow ring recoloured green). A glowing collar sits over
 the joint so no gap shows at any tilt.
 
 One quirk worth knowing if you build NMS geometry with MBINCompiler: it writes each mesh's position-stream length

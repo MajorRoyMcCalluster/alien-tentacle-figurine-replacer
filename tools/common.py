@@ -2,14 +2,32 @@
 import os, shutil, subprocess, sys
 import numpy as np
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 AUTHOR = "MajorRoyMcCalluster"
 MOD_NAME = "Alien Tentacle Figurine"            # display name
 MOD_FOLDER = "AlienTentacleFigurine"            # folder inside GAMEDATA/MODS
 RELEASE_NAME = "Alien Tentacle Figurine Replacer"
 PREFIX = "ATF"                                  # file prefix for our materials / textures
 
-# in-game text (replaces the Tentacled Figurine's name and description)
+# ---- which figurine this mod replaces
+# The Atlas Figurine: sold in the Quicksilver shop (tier 1) on the Space Anomaly, so anyone can get it early.
+# Its scene has the same joints and pedestal as the other figurines; every mesh links to its stream by name.
+SLOT = dict(
+    label="Atlas Figurine",
+    scene="ATLASBOBBLEHEAD",                       # file stem; game files are stored lower case
+    order=["ATLASMODEL", "SUB1ATLASMODEL", "SUB2ATLASMODEL", "BASE", "SUB1BASE", "BASEGLOW"],  # stream order in the geometry file
+    roles={"head": "ATLASMODEL",                   # upper tendril, child of Headjnt -> wobbles
+           "rings": "SUB1ATLASMODEL",              # glowing rings (child of head)
+           "collar": "SUB2ATLASMODEL",             # glowing collar over the wobble seam (child of head)
+           "lower": "BASEGLOW"},                   # foot + lower tendril, static
+    pedestal="BASE", pedestal_glow="SUB1BASE",     # original pedestal geometry, kept
+    base_offset=(0.0, 0.009608, -0.011222),        # pedestal node transform (used by the preview renders)
+    text_keys=("UI_BOBBLE_ATLAS_NAME", "UI_BOBBLE_ATLAS_NAME_L", "UI_BOBBLE_ATLAS_DESC"),
+    loc="NMS_LOC6",
+)
+SCENE_LC = SLOT["scene"].lower()
+
+# in-game text (replaces the figurine's name and description)
 ITEM_NAME = "ALIEN TENTACLE FIGURINE"
 ITEM_NAME_L = "Alien Tentacle Figurine"
 ITEM_DESC = ("A bioluminescent synthetic companion for your starship's cockpit, cast in the likeness of an alien tentacle. "
@@ -22,12 +40,12 @@ DIST = os.path.join(REPO, "dist")              # release zips (git-ignored)
 BOB = "models/planets/biomes/common/buildings/props/bobbleheads/"
 # game files the build reads (all lower case, as stored in the game's .pak files)
 GAME_FILES = {
-    BOB + "octobobblehead.scene.mbin": "NMSARC.EntitySceneMBIN.pak",
-    BOB + "octobobblehead.geometry.mbin.pc": "NMSARC.MeshPlanetBIOMES.pak",
-    BOB + "octobobblehead.geometry.data.mbin.pc": "NMSARC.MeshPlanetBIOMES.pak",
-    BOB + "octobobblehead/bobblebaseglowgreenmat.material.mbin": "NMSARC.MetadataEtc.pak",
-    BOB + "octobobblehead/tilingtexture_mat.material.mbin": "NMSARC.MetadataEtc.pak",
-    BOB + "toysmbobblehead/toybackpack_mat.material.mbin": "NMSARC.MetadataEtc.pak",
+    BOB + SCENE_LC + ".scene.mbin": "NMSARC.EntitySceneMBIN.pak",
+    BOB + SCENE_LC + ".geometry.mbin.pc": "NMSARC.MeshPlanetBIOMES.pak",
+    BOB + SCENE_LC + ".geometry.data.mbin.pc": "NMSARC.MeshPlanetBIOMES.pak",
+    BOB + SCENE_LC + "/tilingtexture_mat.material.mbin": "NMSARC.MetadataEtc.pak",          # pedestal (kept)
+    BOB + "octobobblehead/bobblebaseglowgreenmat.material.mbin": "NMSARC.MetadataEtc.pak",  # template for the glow materials
+    BOB + "toysmbobblehead/toybackpack_mat.material.mbin": "NMSARC.MetadataEtc.pak",       # template for the main material
 }
 
 def game_path(rel):
