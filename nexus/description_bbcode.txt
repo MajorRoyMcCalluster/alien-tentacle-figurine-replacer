@@ -3,6 +3,8 @@
 
 [line]
 
+[center][youtube]fznr0ERuLQg[/youtube][/center]
+
 [size=4][color=#6effeb][b]What it does[/b][/color][/size]
 A figurine replacer: swaps the [b]Atlas Figurine[/b] cockpit adornment for a glowing alien tentacle standing on a suction-cup foot. It sits on the figurine's usual glowing pedestal on your dashboard, and the top half wobbles on the figurine's bobble joint as your ship moves.
 

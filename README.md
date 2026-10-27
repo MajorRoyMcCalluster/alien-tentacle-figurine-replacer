@@ -10,6 +10,8 @@ A figurine replacer for **No Man's Sky**. Replaces the **Atlas Figurine** cockpi
 
 **Getting the Atlas Figurine:** buy it with Quicksilver from the Quicksilver Synthesis Companion on the Space Anomaly. Some reward starships also come with it installed.
 
+**Video:** [watch it in game on YouTube](https://youtu.be/fznr0ERuLQg)
+
 **Players:** download the ready-made mod from Nexus Mods (or from this repo's Releases), then extract the
 `AlienTentacleFigurine` folder into `No Man's Sky\GAMEDATA\MODS\`.
 

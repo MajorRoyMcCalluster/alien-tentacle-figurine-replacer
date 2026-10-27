@@ -49,6 +49,12 @@ Upload:        Alien Tentacle Figurine Replacer-1.1.0.zip
 Description:   Extract the AlienTentacleFigurine folder into No Man's Sky\GAMEDATA\MODS.
 
 ---------------------------------------------------------------------
+VIDEO  (Videos tab - add this link)
+---------------------------------------------------------------------
+https://youtu.be/fznr0ERuLQg
+The description above also embeds it near the top.
+
+---------------------------------------------------------------------
 IMAGES  (Images tab - set images/00_header.jpg as the primary image)
 ---------------------------------------------------------------------
 images/00_header.jpg    Primary image (in-game promo header)
@@ -66,6 +72,8 @@ DESCRIPTION  (paste everything between the lines into the Description box; it's 
 [size=3][i]A bioluminescent cockpit companion that wobbles while you fly.[/i][/size][/center]
 
 [line]
+
+[center][youtube]fznr0ERuLQg[/youtube][/center]
 
 [size=4][color=#6effeb][b]What it does[/b][/color][/size]
 A figurine replacer: swaps the [b]Atlas Figurine[/b] cockpit adornment for a glowing alien tentacle standing on a suction-cup foot. It sits on the figurine's usual glowing pedestal on your dashboard, and the top half wobbles on the figurine's bobble joint as your ship moves.
