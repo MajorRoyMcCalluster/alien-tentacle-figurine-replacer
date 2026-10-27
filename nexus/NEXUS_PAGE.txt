@@ -1,5 +1,5 @@
 =====================================================================
- NEXUS MODS UPLOAD SHEET  -  Alien Tentacle Figurine Replacer  v1.1.0
+ NEXUS MODS UPLOAD SHEET  -  Alien Tentacle Figurine Replacer  v1.0.0
  Copy each field into the matching box on the Nexus upload form.
 =====================================================================
 
@@ -7,7 +7,7 @@ MOD NAME
 Alien Tentacle - Figurine Replacer
 
 VERSION
-1.1.0
+1.0.0
 
 AUTHOR
 MajorRoyMcCalluster
@@ -43,9 +43,9 @@ Replaces the Atlas Figurine cockpit figurine with a glowing, wobbling alien tent
 MAIN FILE  (Files tab)
 ---------------------------------------------------------------------
 File name:     Alien Tentacle Figurine Replacer
-Version:       1.1.0
+Version:       1.0.0
 Category:      Main files
-Upload:        Alien Tentacle Figurine Replacer-1.1.0.zip
+Upload:        Alien Tentacle Figurine Replacer-1.0.0.zip
 Description:   Extract the AlienTentacleFigurine folder into No Man's Sky\GAMEDATA\MODS.
 
 ---------------------------------------------------------------------

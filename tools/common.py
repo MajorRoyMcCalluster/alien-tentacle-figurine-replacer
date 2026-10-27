@@ -2,7 +2,7 @@
 import os, shutil, subprocess, sys
 import numpy as np
 
-VERSION = "1.1.0"
+VERSION = "1.0.0"
 AUTHOR = "MajorRoyMcCalluster"
 MOD_NAME = "Alien Tentacle Figurine"            # display name
 MOD_FOLDER = "AlienTentacleFigurine"            # folder inside GAMEDATA/MODS
